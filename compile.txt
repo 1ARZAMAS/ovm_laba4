@@ -1,3 +1,5 @@
 posix
 g++ -O3 -std=c++17 -pthread dgemm.cpp -o dgemm_pth
 
+IntelTBB
+g++ -O3 -std=c++17 -ltbb IntelTBB.cpp -o intelTbb.out
