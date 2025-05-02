@@ -7,3 +7,6 @@ g++ -O3 -std=c++17 -ltbb IntelTBB.cpp -o intelTbb.out
 MPI
 sudo apt install -y openmpi-bin libopenmpi-dev # установить компилятор
 mpic++ -O3 -std=c++17 MPI.cpp -o MPI.out
+
+gpu
+sudo apt install nvidia-cuda-toolkit # установить cuda
