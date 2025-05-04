@@ -20,12 +20,14 @@ __global__ void dgemm_kernel(int n, const double* A, const double* B, double* C,
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        std::cout << "Использование: " << argv[0] << " <размер матрицы>" << std::endl;
+    if (argc < 2) {
+        std::cout << "Использование: " << argv[0] << " <размер матрицы> <потоки на блок>"<< std::endl;
         return 1;
     }
 
     int n = atoi(argv[1]);
+    int threadsPerBlock = (argc >= 3) ? atoi(argv[2]) : 16;
+    int blocksPerGrid = (n + threadsPerBlock - 1) / threadsPerBlock;
     if (n <= 0) {
         std::cerr << "Ошибка: размер должен быть положительным числом" << std::endl;
         return 1;

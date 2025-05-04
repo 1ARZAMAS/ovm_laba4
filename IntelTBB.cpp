@@ -4,6 +4,7 @@
 #include <ctime>
 #include <chrono>
 #include <oneapi/tbb.h>
+#include <oneapi/tbb/global_control.h>
 
 using namespace std;
 using namespace oneapi::tbb;
@@ -27,10 +28,13 @@ void dgemm(int n, const vector<vector<double>>& A, const vector<vector<double>>&
 int main(int argc, char* argv[]) {
     auto begin = chrono::steady_clock::now();
 
-    if (argc != 2) {
-        cout << "Использование: " << argv[0] << " размер_матрицы" << endl;
+    if (argc < 2) {
+        cout << "Использование: " << argv[0] << " <размер> [потоки]" << endl;
         return 1;
     }
+    int n = atoi(argv[1]);
+    int threads = (argc >= 3) ? atoi(argv[2]) : tbb::info::default_concurrency();
+    tbb::global_control control(tbb::global_control::max_allowed_parallelism, threads);
 
     int n = atoi(argv[1]);
     if (n <= 0) {
